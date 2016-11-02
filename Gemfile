@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-timepicker-rails'
+gem 'tzinfo-data'
 
 group :production do
   gem 'pg', '0.15.1'
