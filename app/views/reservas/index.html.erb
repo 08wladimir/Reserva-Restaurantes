@@ -1,0 +1,41 @@
+<center>
+  <h1>Reservas</h1>
+</center>
+
+<br></br>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Restaurante</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% @reservas.each do |reserva| %>
+          <tr>
+            <td><%= reserva.fecha %></td>
+            <% if reserva.hora == nil %>
+              <td>No tiene hora de reserva</td>
+            <% else %>
+              <td><%= reserva.hora.strftime('%H:%m') %></td>
+            <% end %>
+            <td><%= reserva.restaurante.nombre %></td>
+            <td><%= reserva.tipo %></td>
+            <% if current_user.rol == "Comprador" %>
+              <td></td>
+            <% else %>
+              <td><%= link_to 'Confirmar', edit_reserva_path(reserva) %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

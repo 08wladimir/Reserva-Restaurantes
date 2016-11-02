@@ -1,0 +1,59 @@
+<%= form_for(@reserva) do |f| %>
+  <% if @reserva.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reserva.errors.count, "error") %> prohibited this reserva from being saved:</h2>
+
+      <ul>
+      <% @reserva.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="field">
+            <%= f.label :fecha %><br>
+            <%= f.text_field :fecha, :type =>"date", :class=>"form-control" %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="field">
+            <%= f.label :hora %><br>
+            <%= f.text_field :hora, :type => "time", :class=>"form-control" %>
+          </div>
+        </div>
+      </div>
+      
+      <% if current_user.rol == "Comprador" %>
+        <%= f.text_field :user_id, :value => current_user.id, :type=>"hidden" %>
+        <%= f.text_field :tipo, :value => "Por Confirmar", :type=>"hidden" %>
+      <% else %>
+        <%= f.text_field :tipo, :value => "Confirmado", :type=>"hidden" %>
+      <% end %>
+      
+      <div class="field">
+        <%= f.label :restaurante_id %><br>
+        <%= f.collection_select(:restaurante_id, Restaurante.all, 
+                                          :id, :nombre,
+                                       {:prompt => false}, {:class=>"form-control", :style=>"padding:6px 0px;"}) %>
+      </div>
+      
+      <div class="field">
+        <%= f.label :mesa %><br>
+        <%= f.number_field :mesa, class:"form-control" %>
+      </div>
+      <br></br>
+      <center>
+      <div class="actions">
+        <%= f.submit "Reservar", :class => "btn btn-log btn-default" %>
+      </div>
+      </center>
+      
+    </div>
+  </div>
+  
+<% end %>
